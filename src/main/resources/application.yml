@@ -1,0 +1,27 @@
+server:
+  #use-forward-headers: true
+  port: 80
+
+zuul:
+  routes:
+    person:
+      sensitiveHeaders:
+      path: /ashbringer/**
+      url: http://localhost:8080/
+    users:
+      sensitiveHeaders:
+      path: /users/**
+      url: http://localhost:8043/users
+
+logging:
+  level:
+    root: debug
+
+security:
+  oauth2:
+    client:
+      clientId: client
+      clientSecret: 123456
+      accessTokenUri: ${TOKEN_URL:http://localhost:8043}/oauth/token
+      userAuthorizationUri: ${USER_AUTH_URL:http://localhost:8043}/oauth/authorize
+      pre-established-redirect-uri: http://localhost:8081/callback
